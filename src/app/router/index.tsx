@@ -1,16 +1,11 @@
+import { ManiLayout } from '@/pages/layouts/main-layout';
+
 import { Outlet, Route, Routes } from 'react-router-dom';
 
 export const AppRouter = () => {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <>
-            <Outlet />
-          </>
-        }
-      >
+      <Route path="/" element={<ManiLayout />}>
         <Route index element={<>home</>} />
         <Route path="categories" element={<>categories</>} />
         <Route path="profile" />
