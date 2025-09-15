@@ -2,11 +2,13 @@ import { ManiLayout } from '@/pages/layouts/main-layout';
 
 import { Outlet, Route, Routes } from 'react-router-dom';
 
+import { BookList } from '@/widgets/book-list';
+
 export const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<ManiLayout />}>
-        <Route index element={<>home</>} />
+        <Route index element={<BookList />} />
         <Route path="categories" element={<>categories</>} />
         <Route path="profile" />
         <Route
