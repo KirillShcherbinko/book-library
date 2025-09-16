@@ -8,7 +8,12 @@ export const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<ManiLayout />}>
-        <Route index element={<BookList variant="scroll" />} />
+        <Route
+          index
+          element={
+            <BookList type="subject" variant="scroll" subject="fantasy" limit={10} page={1} />
+          }
+        />
         <Route path="categories" element={<>categories</>} />
         <Route path="profile" />
         <Route
