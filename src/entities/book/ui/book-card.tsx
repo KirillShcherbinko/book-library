@@ -22,7 +22,7 @@ export const BookCard = ({ title, authors, coverId }: TBookCardProps) => {
       </div>
 
       <Stack gap={4}>
-        <Title component="h4" order={4}>
+        <Title component="h4" order={4} lineClamp={3}>
           {title}
         </Title>
         <Text c="var(--mantine-color-gray-4)" lineClamp={1}>

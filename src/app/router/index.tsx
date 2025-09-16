@@ -1,19 +1,13 @@
+import { HomePage } from '@/pages/home-page';
 import { ManiLayout } from '@/pages/layouts/main-layout';
 
 import { Outlet, Route, Routes } from 'react-router-dom';
-
-import { BookList } from '@/widgets/book-list';
 
 export const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<ManiLayout />}>
-        <Route
-          index
-          element={
-            <BookList type="subject" variant="scroll" subject="fantasy" limit={10} page={1} />
-          }
-        />
+        <Route index element={<HomePage />} />
         <Route path="categories" element={<>categories</>} />
         <Route path="profile" />
         <Route
