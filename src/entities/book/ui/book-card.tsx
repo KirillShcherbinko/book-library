@@ -1,6 +1,5 @@
-import { Stack, Text, Title } from '@mantine/core';
+import { Image, Stack, Text, Title } from '@mantine/core';
 
-import { DESKTOP_COVER_SIZE, MOBILE_COVER_SIZE } from '../model/consts';
 import Style from './book.module.css';
 
 type TBookCardProps = {
@@ -13,22 +12,20 @@ const { VITE_COVER_API_BASE_URL } = import.meta.env;
 
 export const BookCard = ({ title, authors, coverId }: TBookCardProps) => {
   return (
-    <Stack gap={8}>
-      <picture className={Style.Cover}>
-        <source
-          media="(max-width: 768px)"
-          srcSet={`${VITE_COVER_API_BASE_URL}/${coverId}-${MOBILE_COVER_SIZE}.jpg`}
-        />
-        <img
-          src={`${VITE_COVER_API_BASE_URL}/${coverId}-${DESKTOP_COVER_SIZE}.jpg`}
+    <Stack gap={8} maw={192} w="100%">
+      <div className={Style.Cover}>
+        <Image
+          src={`${VITE_COVER_API_BASE_URL}/${coverId}-M.jpg`}
           alt={`${title} cover`}
+          radius="md"
         />
-      </picture>
+      </div>
+
       <Stack gap={4}>
-        <Title component="h3" order={3}>
+        <Title component="h4" order={4}>
           {title}
         </Title>
-        <Text c="var(--mantine-color-light-2)" lineClamp={1}>
+        <Text c="var(--mantine-color-gray-4)" lineClamp={1}>
           {authors.join(', ')}
         </Text>
       </Stack>

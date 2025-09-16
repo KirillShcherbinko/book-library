@@ -1,13 +1,19 @@
 import { useQuery } from '@apollo/client/react';
+import { Carousel } from '@mantine/carousel';
 import { Group } from '@mantine/core';
 
 import { BookCard, GET_BOOKS_BY_SUBJECT } from '@/entities/book';
 
 import type { Book } from '@/shared';
 
+import type { TBookListVariant } from '../model/types';
 import { BookListSkeleton } from './skeleton';
 
-export const BookList = () => {
+type TBookListProps = {
+  variant?: TBookListVariant;
+};
+
+export const BookList = ({ variant = 'feed' }: TBookListProps) => {
   const {
     data: { booksBySubject: books } = {},
     loading,
@@ -24,11 +30,32 @@ export const BookList = () => {
   if (error) return <>{error.message}</>;
   if (!books) return <>No data</>;
 
-  return (
-    <Group>
-      {books.map(({ key, title, authors, coverId }) => (
-        <BookCard key={key} title={title} authors={authors} coverId={coverId || 0} />
-      ))}
-    </Group>
+  const renderCard = (book: Book) => {
+    const card = (
+      <BookCard
+        key={book.key}
+        title={book.title}
+        authors={book.authors}
+        coverId={book.coverId || 0}
+      />
+    );
+
+    return variant === 'scroll' ? <Carousel.Slide key={book.key}>{card}</Carousel.Slide> : card;
+  };
+
+  return variant === 'scroll' ? (
+    <Carousel
+      slideGap={16}
+      slideSize="auto"
+      emblaOptions={{
+        dragFree: true,
+        containScroll: 'trimSnaps',
+        watchDrag: true,
+      }}
+    >
+      {books.map((book) => renderCard(book))}
+    </Carousel>
+  ) : (
+    <Group align="start">{books.map(renderCard)}</Group>
   );
 };

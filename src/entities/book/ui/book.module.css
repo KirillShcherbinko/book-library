@@ -1,6 +1,8 @@
 .Cover {
   display: flex;
+  width: 192px;
+  height: 270px;
   padding: 4px;
-  border-radius: var(--mantine-radius-md);
+  border-radius: calc(var(--mantine-radius-md) + 4px);
   border: 2px solid var(--mantine-color-default-border);
 }

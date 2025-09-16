@@ -8,7 +8,7 @@ export const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<ManiLayout />}>
-        <Route index element={<BookList />} />
+        <Route index element={<BookList variant="scroll" />} />
         <Route path="categories" element={<>categories</>} />
         <Route path="profile" />
         <Route
