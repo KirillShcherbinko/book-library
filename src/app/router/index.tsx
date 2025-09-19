@@ -1,3 +1,4 @@
+import { BooksPage } from '@/pages/books-page';
 import { HomePage } from '@/pages/home-page';
 import { ManiLayout } from '@/pages/layouts/main-layout';
 
@@ -8,7 +9,8 @@ export const AppRouter = () => {
     <Routes>
       <Route path="/" element={<ManiLayout />}>
         <Route index element={<HomePage />} />
-        <Route path="categories" element={<>categories</>} />
+        <Route path="books/subject/:query" element={<BooksPage />} />
+        <Route path="books/search/:query" element={<BooksPage />} />
         <Route path="profile" />
         <Route
           path="auth"

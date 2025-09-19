@@ -28,7 +28,7 @@ export const SubjectList = () => {
       }}
     >
       {data.subjects.map(({ title, icon }) => (
-        <Carousel.Slide>
+        <Carousel.Slide key={title}>
           <SubjectCard title={title} icon={icon} />
         </Carousel.Slide>
       ))}

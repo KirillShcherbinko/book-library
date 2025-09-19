@@ -1,4 +1,5 @@
 import type React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Title } from '@mantine/core';
 import * as TablerIcons from '@tabler/icons-react';
@@ -11,10 +12,15 @@ type TSubjectCardProps = {
 };
 
 export const SubjectCard = ({ title, icon }: TSubjectCardProps) => {
+  const navigate = useNavigate();
+
   const SubjectIcon = TablerIcons[icon as keyof typeof TablerIcons] as React.ElementType;
 
+  const handleClick = () =>
+    navigate(`/books/subject/${title.toLocaleLowerCase().replace(' ', '_')}`);
+
   return (
-    <div className={Style.Card}>
+    <div className={Style.Card} onClick={handleClick}>
       <Title component="h5" order={5}>
         {title}
       </Title>
