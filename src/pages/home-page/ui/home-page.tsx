@@ -4,6 +4,7 @@ import { Loader, Stack, Title } from '@mantine/core';
 import { GET_POPULAR_BOOKS_SUBJECTS } from '@/entities/subject';
 
 import { BookList } from '@/widgets/book-list';
+import { SubjectList } from '@/widgets/subject-list';
 
 export const HomePage = () => {
   const {
@@ -18,6 +19,7 @@ export const HomePage = () => {
 
   return (
     <Stack gap="lg">
+      <SubjectList />
       {subjects.map((subject) => (
         <Stack key={subject} gap="md">
           <Title component="h3" order={3}>

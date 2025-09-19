@@ -1,0 +1,14 @@
+.Controls {
+  top: calc(
+    140px / 2 - var(--carousel-control-size) / 2
+  ); /** half of a book cover - half of control size**/
+}
+
+.Control {
+  background-color: #ffffff;
+  opacity: 1;
+  &[data-inactive] {
+    opacity: 0;
+    cursor: default;
+  }
+}

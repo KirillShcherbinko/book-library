@@ -5,3 +5,21 @@ export const GET_POPULAR_BOOKS_SUBJECTS = gql`
     popularBooksSubjects
   }
 `;
+
+export const GET_BASIC_SUBJECTS = gql`
+  query GetBasicSubjects {
+    subjects {
+      title
+      icon
+    }
+  }
+`;
+
+export const GET_ALL_SUBJECTS = gql`
+  query GetBasicSubjects {
+    subjects {
+      title
+      subjects
+    }
+  }
+`;

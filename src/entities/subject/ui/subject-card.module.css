@@ -1,0 +1,10 @@
+.Card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 120px;
+  height: 140px;
+  padding: var(--mantine-spacing-md);
+  border-radius: calc(var(--mantine-radius-md) + 4px);
+  border: 2px solid var(--mantine-color-default-border);
+}
