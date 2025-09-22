@@ -1,4 +1,4 @@
-import { type FieldValues, type UseFormSetError, useFormContext } from 'react-hook-form';
+import { type UseFormSetError } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 
 import { CombinedGraphQLErrors, type ErrorLike } from '@apollo/client';
@@ -12,11 +12,12 @@ import type { AuthResponse, Mutation, MutationLoginArgs, MutationRegisterArgs } 
 const handleError = (
   error: ErrorLike,
   action: 'login' | 'register',
-  setError: UseFormSetError<FieldValues>,
+  setError: UseFormSetError<MutationLoginArgs | MutationRegisterArgs>,
 ) => {
+  console.log(error.message);
   if (
     CombinedGraphQLErrors.is(error) &&
-    error.errors.some((error) => error.message.toLowerCase().includes('email'))
+    error.errors.some((error) => error.message.toLowerCase().includes('user'))
   ) {
     setError('email', { message: error.message });
   } else if (
@@ -32,11 +33,9 @@ const handleError = (
   }
 };
 
-export const useAuth = () => {
+export const useAuth = (setError: UseFormSetError<MutationLoginArgs | MutationRegisterArgs>) => {
   const location = useLocation();
   const action = location.pathname.includes('login') ? 'login' : 'register';
-
-  const { setError } = useFormContext();
 
   const [login, { loading: loginLoading, error: loginError }] = useMutation<
     Pick<Mutation, 'login'>,

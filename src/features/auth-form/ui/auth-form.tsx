@@ -1,56 +1,70 @@
-import { FormProvider, useForm } from 'react-hook-form';
-import { useLocation } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Input, PasswordInput } from '@mantine/core';
+import { Button, Input, PasswordInput, Stack } from '@mantine/core';
 import { IconLock, IconMail } from '@tabler/icons-react';
 
-import { type TUserSchema, userSchema } from '@/entities/user';
+import {
+  MAX_PASSWORD_LENGTH,
+  MIN_PASSWORD_LENGTH,
+  type TUserSchema,
+  userSchema,
+} from '@/entities/user';
 
 import { tokenManager } from '@/shared';
 
 import { useAuth } from '../api/hooks';
+import Style from './auth-form.module.css';
 
 export const AuthForm = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const form = useForm<TUserSchema>({
+  const { handleSubmit, register, formState, setError } = useForm<TUserSchema>({
     resolver: zodResolver(userSchema),
     defaultValues: { email: '', password: '' },
   });
 
-  const { handleSubmit, register, formState } = form;
-
-  const { submit, loading } = useAuth();
+  const { submit, loading } = useAuth(setError);
 
   const onSubmit = async (formValues: TUserSchema) => {
     const { email, password } = formValues;
     const data = await submit({ email, password });
+
     tokenManager.set(data?.accessToken || null);
+    navigate('/profile');
   };
 
   return (
-    <FormProvider {...form}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input.Wrapper label="Email">
+    <form className={Style.Form} onSubmit={handleSubmit(onSubmit)}>
+      <Stack gap={8}>
+        <Input.Wrapper label="Email" error={formState.errors.email?.message}>
           <Input
             id="email"
-            error={formState.errors.email?.message}
-            leftSection={<IconMail size={20} />}
+            placeholder="example@mail.com"
+            error={!!formState.errors.email}
+            leftSection={<IconMail size={20} stroke={1.2} />}
             disabled={loading}
+            radius="lg"
             {...register('email')}
           />
         </Input.Wrapper>
         <PasswordInput
           id="password"
           label="Password"
+          placeholder={`Length between ${MIN_PASSWORD_LENGTH} and ${MAX_PASSWORD_LENGTH}`}
           error={formState.errors.password?.message}
-          leftSection={<IconLock size={20} />}
+          leftSection={<IconLock size={20} stroke={1.2} />}
           disabled={loading}
+          radius="lg"
           {...register('password')}
         />
-        <Button type="submit">{location.pathname.includes('login') ? 'Login' : 'Register'}</Button>
-      </form>
-    </FormProvider>
+      </Stack>
+
+      <Button type="submit" radius="lg">
+        {location.pathname.includes('login') ? 'Login' : 'Register'}
+      </Button>
+    </form>
   );
 };

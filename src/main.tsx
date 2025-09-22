@@ -15,7 +15,7 @@ import { authLink, errorLink } from './entities/user';
 import './index.css';
 
 const httpLink = new HttpLink({
-  uri: import.meta.env.BASE_URL,
+  uri: import.meta.env.VITE_BASE_URL,
   credentials: 'include',
 });
 

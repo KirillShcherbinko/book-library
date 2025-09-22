@@ -4,12 +4,14 @@ import { AuthForm } from '@/features/auth-form';
 
 export const RegisterPage = () => {
   return (
-    <Stack align="center" gap={32}>
+    <Stack align="start" gap={32} w="100%">
       <Stack gap={8}>
-        <Title component="h3" order={3}>
+        <Title component="h1" order={1}>
           Create your account
         </Title>
-        <Text c="gray-4">Create a new account so you can read lots of interesting books!</Text>
+        <Text c="var(--mantine-color-light-7)" fz={18}>
+          Create a new account so you can read lots of interesting books!
+        </Text>
       </Stack>
       <AuthForm />
     </Stack>

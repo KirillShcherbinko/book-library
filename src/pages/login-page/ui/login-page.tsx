@@ -4,12 +4,14 @@ import { AuthForm } from '@/features/auth-form';
 
 export const LoginPage = () => {
   return (
-    <Stack align="center" gap={32}>
-      <Stack gap={8}>
-        <Title component="h3" order={3}>
+    <Stack align="start" gap={32} w="100%">
+      <Stack gap={8} align="start">
+        <Title component="h1" order={1}>
           Welcome back!
         </Title>
-        <Text c="gray-4">You can log into your account first to read many interesting books!</Text>
+        <Text c="var(--mantine-color-light-7)" fz={18}>
+          You can log into your account first to read many interesting books!
+        </Text>
       </Stack>
       <AuthForm />
     </Stack>

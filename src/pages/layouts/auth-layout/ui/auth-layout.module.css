@@ -1,0 +1,13 @@
+.AuthLayout {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Card {
+  display: flex;
+  align-items: start;
+  max-width: 600px;
+  width: 100%;
+}

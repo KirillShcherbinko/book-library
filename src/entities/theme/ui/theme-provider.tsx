@@ -9,5 +9,9 @@ type TThemeProviderProps = {
 };
 
 export const ThemeProvider = ({ children }: TThemeProviderProps) => {
-  return <MantineProvider theme={theme}>{children}</MantineProvider>;
+  return (
+    <MantineProvider forceColorScheme="light" theme={theme}>
+      {children}
+    </MantineProvider>
+  );
 };
