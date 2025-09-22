@@ -13,17 +13,21 @@
   },
   "dependencies": {
     "@apollo/client": "^4.0.4",
+    "@hookform/resolvers": "^5.2.2",
     "@mantine/carousel": "^8.3.1",
     "@mantine/core": "^8.3.1",
     "@mantine/hooks": "^8.3.1",
+    "@mantine/notifications": "^8.3.1",
     "@tabler/icons-react": "^3.35.0",
     "embla-carousel": "^8.5.2",
     "embla-carousel-react": "^8.5.2",
     "graphql": "^16.11.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-hook-form": "^7.63.0",
     "react-router-dom": "^7.9.0",
-    "rxjs": "^7.8.2"
+    "rxjs": "^7.8.2",
+    "zod": "^4.1.11"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",

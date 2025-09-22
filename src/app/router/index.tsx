@@ -1,6 +1,8 @@
 import { BooksPage } from '@/pages/books-page';
 import { HomePage } from '@/pages/home-page';
 import { ManiLayout } from '@/pages/layouts/main-layout';
+import { LoginPage } from '@/pages/login-page';
+import { RegisterPage } from '@/pages/register-page';
 
 import { Outlet, Route, Routes } from 'react-router-dom';
 
@@ -20,8 +22,8 @@ export const AppRouter = () => {
             </>
           }
         >
-          <Route path="login" element={<>login</>} />
-          <Route path="register" element={<>register</>} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
         </Route>
       </Route>
     </Routes>

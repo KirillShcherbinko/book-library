@@ -6,6 +6,8 @@ import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/clien
 import { ApolloProvider } from '@apollo/client/react';
 import '@mantine/carousel/styles.css';
 import '@mantine/core/styles.css';
+import { Notifications } from '@mantine/notifications';
+import '@mantine/notifications/styles.css';
 
 import App from './app/App.tsx';
 import { ThemeProvider } from './entities/theme';
@@ -27,6 +29,7 @@ createRoot(document.getElementById('root')!).render(
     <ThemeProvider>
       <ApolloProvider client={client}>
         <BrowserRouter>
+          <Notifications />
           <App />
         </BrowserRouter>
       </ApolloProvider>
