@@ -1,3 +1,5 @@
+import { observer } from 'mobx-react-lite';
+
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -11,13 +13,12 @@ import {
   type TUserSchema,
   userSchema,
 } from '@/entities/user';
-
-import { tokenManager } from '@/shared';
+import { authStore } from '@/entities/user';
 
 import { useAuth } from '../api/hooks';
 import Style from './auth-form.module.css';
 
-export const AuthForm = () => {
+export const AuthForm = observer(() => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -32,7 +33,7 @@ export const AuthForm = () => {
     const { email, password } = formValues;
     const data = await submit({ email, password });
 
-    tokenManager.set(data?.accessToken || null);
+    authStore.set(data?.accessToken || null);
     navigate('/profile');
   };
 
@@ -67,4 +68,4 @@ export const AuthForm = () => {
       </Button>
     </form>
   );
-};
+});

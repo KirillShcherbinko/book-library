@@ -7,8 +7,8 @@ import type { Book } from '@/shared';
 
 import { useBookList } from '../api/hooks';
 import type { TBookListType, TBookListVariant } from '../model/types';
+import { BookListSkeleton } from './book-list-skeleton';
 import Style from './book-list.module.css';
-import { BookListSkeleton } from './skeleton';
 
 type TBookListProps = {
   type: TBookListType;
@@ -29,7 +29,7 @@ export const BookList = ({
 }: TBookListProps) => {
   const { data: books, loading, error } = useBookList(type, limit, page, subject, searchQuery);
 
-  if (loading) return <BookListSkeleton />;
+  if (loading) return <BookListSkeleton variant={variant} />;
   if (error) return <>{error}</>;
   if (!books) return <>No data</>;
 

@@ -1,5 +1,11 @@
-class TokenManager {
+import { makeAutoObservable } from 'mobx';
+
+class AuthStore {
   private accessToken: string | null = null;
+
+  constructor() {
+    makeAutoObservable(this);
+  }
 
   public get(): string | null {
     return this.accessToken;
@@ -18,4 +24,4 @@ class TokenManager {
   }
 }
 
-export const tokenManager = new TokenManager();
+export const authStore = new AuthStore();

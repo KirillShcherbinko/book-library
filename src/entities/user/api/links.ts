@@ -3,8 +3,7 @@ import { print } from 'graphql';
 import { ApolloLink, CombinedGraphQLErrors, Observable } from '@apollo/client';
 import { ErrorLink } from '@apollo/client/link/error';
 
-import { tokenManager } from '@/shared';
-
+import { authStore } from '../model/store';
 import { REFRESH } from './queries';
 
 const fetchAccessToken = async () => {
@@ -35,7 +34,7 @@ export const errorLink = new ErrorLink(({ error, operation, forward }) => {
 
           if (!newAccessToken) throw new Error('Refresh failed');
 
-          tokenManager.set(newAccessToken);
+          authStore.set(newAccessToken);
 
           operation.setContext(({ headers = {} }) => ({
             headers: {
@@ -60,7 +59,7 @@ export const errorLink = new ErrorLink(({ error, operation, forward }) => {
 });
 
 export const authLink = new ApolloLink((operation, forward) => {
-  const accessToken = tokenManager.get();
+  const accessToken = authStore.get();
 
   operation.setContext(({ headers = {} }) => ({
     headers: {
