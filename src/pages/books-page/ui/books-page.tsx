@@ -16,10 +16,7 @@ export const BooksPage = () => {
     <BookList
       variant="feed"
       type={currentType as TBookListType}
-      limit={20}
-      page={1}
       subject={currentType === 'subject' ? query : undefined}
-      searchQuery={currentType === 'search' ? query : undefined}
     />
   );
 };
