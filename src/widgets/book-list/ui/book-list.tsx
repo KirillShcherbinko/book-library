@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 
 import { Carousel } from '@mantine/carousel';
-import { Group, Loader, Stack } from '@mantine/core';
+import { Group, Loader, Stack, Text } from '@mantine/core';
 
 import { BookCard, type TBookListVariant, bookStore } from '@/entities/book';
 import { ErrorMessage } from '@/entities/error';
@@ -25,13 +25,17 @@ export const BookList = observer(({ type, variant = 'feed', subject }: TBookList
   const { data: books, loading, error, fetchMore, refetch } = useBookList(type, variant, subject);
   const ref = useFetchMoreBooks(loading, fetchMore);
 
+  const searchQuery = bookStore.getSearchQuery();
+
   useEffect(() => {
     return () => bookStore.setOffset(0);
   }, []);
 
+  if (type === 'search' && !searchQuery)
+    return <Text c="var(--mantine-color-light-7)">Search query is empty</Text>;
   if (loading && !books.length) return <BookListSkeleton variant={variant} />;
   if (error) return <ErrorMessage error={error} refetch={refetch} />;
-  if (!books) return <>No data</>;
+  if (!books) return <Text c="var(--mantine-color-light-7)">No results</Text>;
 
   const renderCard = (book: Book) => {
     const card = (

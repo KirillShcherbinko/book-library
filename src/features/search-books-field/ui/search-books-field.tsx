@@ -19,6 +19,8 @@ export const SearchBooksField = observer(() => {
       leftSection={<IconSearch size={18} stroke={1.5} />}
       value={searchQuery}
       onChange={handleChange}
+      maw={968}
+      w="100%"
     />
   );
 });

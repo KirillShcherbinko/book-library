@@ -17,7 +17,7 @@ export const ErrorMessage = <TData, TVariables extends OperationVariables>({
 }: TErrorMessageProps<TData, TVariables>) => {
   return (
     <Stack align="center" gap={8}>
-      <Text c="var(--mantine-color-light-4)">{error.message}</Text>
+      <Text c="var(--mantine-color-light-7)">{error.message}</Text>
       <Button variant="transparent" onClick={() => refetch()}>Retry</Button>
     </Stack>
   );

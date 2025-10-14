@@ -17,7 +17,7 @@ export const SubjectCard = ({ title, icon }: TSubjectCardProps) => {
   const SubjectIcon = TablerIcons[icon as keyof typeof TablerIcons] as React.ElementType;
 
   const handleClick = () =>
-    navigate(`/books/subject/${title.toLocaleLowerCase().replace(' ', '_')}`);
+    navigate(`/books/${title.toLocaleLowerCase().replace(' ', '_')}`);
 
   return (
     <div className={Style.Card} onClick={handleClick}>
