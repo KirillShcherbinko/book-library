@@ -1,0 +1,6 @@
+.Badge {}
+
+.Badge:hover {
+  background-color: var(--mantine-color-light-3);
+  cursor: pointer;
+}
