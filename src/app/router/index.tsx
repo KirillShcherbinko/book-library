@@ -1,3 +1,4 @@
+import { BookPage, prefixes } from '@/pages/book-page';
 import { BooksPage } from '@/pages/books-page';
 import { HomePage } from '@/pages/home-page';
 import { AuthLayout } from '@/pages/layouts/auth-layout';
@@ -22,6 +23,13 @@ export const AppRouter = () => {
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
         </Route>
+        {prefixes.map((prefix) => (
+          <Route
+            key={prefix}
+            path={`${prefix ? prefix + '/' : ''}book/:key`}
+            element={<BookPage />}
+          />
+        ))}
       </Route>
     </Routes>
   );

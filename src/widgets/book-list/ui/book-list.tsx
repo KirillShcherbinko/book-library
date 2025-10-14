@@ -43,6 +43,7 @@ export const BookList = observer(({ type, variant = 'feed', subject }: TBookList
     const card = (
       <BookCard
         key={book.key}
+        bookKey={book.key}
         title={book.title}
         authors={book.authors}
         coverId={book.coverId || 0}

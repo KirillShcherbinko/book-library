@@ -2,8 +2,10 @@ import { Image, Stack, Text, Title } from '@mantine/core';
 import { IconBookOff } from '@tabler/icons-react';
 
 import Style from './book.module.css';
+import { useNavigate } from 'react-router-dom';
 
 type TBookCardProps = {
+  bookKey: string;
   title: string;
   authors: string[];
   coverId: number;
@@ -11,10 +13,12 @@ type TBookCardProps = {
 
 const { VITE_COVER_API_BASE_URL } = import.meta.env;
 
-export const BookCard = ({ title, authors, coverId }: TBookCardProps) => {
+export const BookCard = ({ bookKey, title, authors, coverId }: TBookCardProps) => {
+  const navigate = useNavigate();
+
   return (
     <Stack gap={8} maw={192} w="100%">
-      <div className={Style.Cover}>
+      <div className={Style.Cover} onClick={() => navigate(`book/${bookKey.replace(/\//g, '_')}`)}>
         {coverId !== 0 ? (
           <Image
             src={`${VITE_COVER_API_BASE_URL}/${coverId}-M.jpg`}

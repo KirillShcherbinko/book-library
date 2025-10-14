@@ -32,3 +32,28 @@ export const GET_USER_BOOKS = gql`
     }
   }
 `;
+
+export const GET_BOOK = gql`
+  query GetBook($key: String!) {
+    book(key: $key) {
+      key
+      title
+      authors
+      description
+      coverIds
+      subjects
+    }
+  }
+`;
+
+export const ADD_BOOK = gql`
+  mutation AddBook($book: BookInput!) {
+    addBook(book: $Book)
+  }
+`;
+
+export const REMOVE_BOOK = gql`
+  mutation RemoveBook($bookKey: String!) {
+    removeBokk(bookKey: $bookKey)
+  }
+`;
