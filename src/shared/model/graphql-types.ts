@@ -28,6 +28,7 @@ export type Book = {
   coverId?: Maybe<Scalars['Int']['output']>;
   coverIds?: Maybe<Array<Scalars['Int']['output']>>;
   description?: Maybe<Scalars['String']['output']>;
+  isInLibrary?: Maybe<Scalars['Boolean']['output']>;
   key: Scalars['ID']['output'];
   subjects?: Maybe<Array<Scalars['String']['output']>>;
   title: Scalars['String']['output'];

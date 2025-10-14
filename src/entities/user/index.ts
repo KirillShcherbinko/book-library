@@ -1,3 +1,4 @@
+export { useAuthInit } from './api/hooks';
 export { LOGIN, LOGOUT, REGISTER } from './api/queries';
 export { authLink, errorLink } from './api/links';
 

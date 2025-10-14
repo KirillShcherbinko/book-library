@@ -7,7 +7,8 @@ import { authStore } from '../model/store';
 import { REFRESH } from './queries';
 
 const fetchAccessToken = async () => {
-  const result = await fetch('/', {
+  const { VITE_BASE_URL } = import.meta.env;
+  const result = await fetch(`${VITE_BASE_URL}/`, {
     method: 'POST',
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
@@ -18,7 +19,14 @@ const fetchAccessToken = async () => {
     throw new Error('Fetcing access token failed');
   }
 
-  return (await result.json()) as { refresh: { accessToken: string } };
+  const data = await result.json();
+  const accessToken = data?.data?.refresh?.accessToken;
+
+  if (!accessToken) {
+    throw new Error('No access token returned from refresh mutation');
+  }
+
+  return accessToken;
 };
 
 export const errorLink = new ErrorLink(({ error, operation, forward }) => {
@@ -29,8 +37,7 @@ export const errorLink = new ErrorLink(({ error, operation, forward }) => {
     return new Observable((observer) => {
       (async () => {
         try {
-          const data = await fetchAccessToken();
-          const newAccessToken = data.refresh.accessToken;
+          const newAccessToken = await fetchAccessToken();
 
           if (!newAccessToken) throw new Error('Refresh failed');
 

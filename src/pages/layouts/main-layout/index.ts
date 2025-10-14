@@ -1,1 +1,1 @@
-export { ManiLayout } from './ui';
+export { ManiLayout } from './ui/main-page';

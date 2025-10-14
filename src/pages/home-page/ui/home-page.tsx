@@ -18,7 +18,7 @@ export const HomePage = () => {
   if (!subjects) return <>No data</>;
 
   return (
-    <Stack gap="lg">
+    <Stack gap="lg" maw={1280} w="100%">
       <SubjectList />
       {subjects.map((subject) => (
         <Stack key={subject} gap="md">

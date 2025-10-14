@@ -42,13 +42,14 @@ export const GET_BOOK = gql`
       description
       coverIds
       subjects
+      isInLibrary
     }
   }
 `;
 
 export const ADD_BOOK = gql`
   mutation AddBook($book: BookInput!) {
-    addBook(book: $Book)
+    addBook(book: $book)
   }
 `;
 

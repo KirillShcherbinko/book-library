@@ -8,6 +8,8 @@ import { IconBookOff } from '@tabler/icons-react';
 import { GET_BOOK } from '@/entities/book';
 import { ErrorMessage } from '@/entities/error';
 
+import { AddBookToLibraryButton } from '@/features/add-book-to-library-button';
+
 import type { Book } from '@/shared';
 
 import Style from './book-page.module.css';
@@ -16,8 +18,10 @@ const { VITE_COVER_API_BASE_URL } = import.meta.env;
 
 export const BookPage = () => {
   const { key: urlKey } = useParams();
+  const normalizedKey = urlKey?.replace(/_/g, '/') || '';
+
   const { data, loading, error, refetch } = useQuery<{ book: Book }>(GET_BOOK, {
-    variables: { key: urlKey?.replace(/_/g, '/') },
+    variables: { key: normalizedKey },
   });
 
   if (loading) return <Loader />;
@@ -72,12 +76,18 @@ export const BookPage = () => {
         <Text c="var(--mantine-color-light-7)">{authors.join(', ')}</Text>
         <Group gap={8}>
           {subjects?.map((subject) => (
-            <Badge variant="default" fw={600}>
+            <Badge key={subject} variant="default" fw={600}>
               {subject}
             </Badge>
           ))}
         </Group>
         <Text>{description}</Text>
+        <AddBookToLibraryButton
+          urlKey={normalizedKey}
+          title={title}
+          authors={authors}
+          coverId={coverIds && coverIds.length ? coverIds[0] : undefined}
+        />
       </Stack>
     </div>
   );
