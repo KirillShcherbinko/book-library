@@ -2,8 +2,8 @@ import { Carousel } from '@mantine/carousel';
 import { Group } from '@mantine/core';
 
 import { BookCardSkeleton } from '@/entities/book';
+import type { TBookListVariant } from '@/entities/book';
 
-import type { TBookListVariant } from '../model/types';
 import Style from './book-list.module.css';
 
 type TBookListSkeletonProps = {

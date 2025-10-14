@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const GET_BOOKS_BY_SUBJECT = gql`
-  query GetBooksBySubject($subject: String!, $limit: Int!, $page: Int!) {
-    booksBySubject(subject: $subject, limit: $limit, page: $page) {
+  query GetBooksBySubject($subject: String!, $limit: Int!, $offset: Int!) {
+    booksBySubject(subject: $subject, limit: $limit, offset: $offset) {
       key
       title
       authors
@@ -12,8 +12,8 @@ export const GET_BOOKS_BY_SUBJECT = gql`
 `;
 
 export const SEARCH_BOOKS = gql`
-  query SearchBooks($searchQuery: String!, $limit: Int!, $page: Int!) {
-    searchBooks(searchQuery: $searchQuery, limit: $limit, page: $page) {
+  query SearchBooks($searchQuery: String!, $limit: Int!, $offset: Int!) {
+    searchBooks(searchQuery: $searchQuery, limit: $limit, offset: $offset) {
       key
       title
       authors
@@ -23,8 +23,8 @@ export const SEARCH_BOOKS = gql`
 `;
 
 export const GET_USER_BOOKS = gql`
-  query UserBooks($limit: Int!, $page: Int!) {
-    userBooks(limit: $limit, page: $page) {
+  query UserBooks($limit: Int!, $offset: Int!) {
+    userBooks(limit: $limit, offset: $offset) {
       key
       title
       authors

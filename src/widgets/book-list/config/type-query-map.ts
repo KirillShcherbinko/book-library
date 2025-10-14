@@ -4,39 +4,42 @@ import type { TQueryConfigMap } from '../model/types';
 
 export const TYPE_QUERY_MAP = (
   limit: number,
-  page: number,
+  offset: number,
   subject?: string,
   searchQuery?: string,
 ): TQueryConfigMap => {
   return {
     subject: {
       query: GET_BOOKS_BY_SUBJECT,
+      key: 'booksBySubject',
       options: {
         variables: {
           subject: subject || 'all',
           limit,
-          page,
+          offset,
         },
       },
       extract: (data) => data?.booksBySubject ?? [],
     },
     search: {
       query: SEARCH_BOOKS,
+      key: 'searchBooks',
       options: {
         variables: {
           searchQuery: searchQuery || '',
           limit,
-          page,
+          offset,
         },
       },
       extract: (data) => data?.searchBooks ?? [],
     },
     user: {
       query: GET_USER_BOOKS,
+      key: 'userBooks',
       options: {
         variables: {
           limit,
-          page,
+          offset,
         },
       },
       extract: (data) => data?.userBooks ?? [],

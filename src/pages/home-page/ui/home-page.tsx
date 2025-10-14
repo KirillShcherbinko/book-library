@@ -25,7 +25,7 @@ export const HomePage = () => {
           <Title component="h3" order={3}>
             {subject}
           </Title>
-          <BookList variant="scroll" type="subject" subject={subject} limit={10} page={1} />
+          <BookList variant="scroll" type="subject" subject={subject} />
         </Stack>
       ))}
     </Stack>

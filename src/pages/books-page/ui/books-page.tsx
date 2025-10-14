@@ -1,5 +1,7 @@
 import { useLocation, useParams } from 'react-router-dom';
 
+import { Stack } from '@mantine/core';
+
 import { BookList, type TBookListType } from '@/widgets/book-list';
 
 export const BooksPage = () => {
@@ -13,10 +15,12 @@ export const BooksPage = () => {
       : 'user';
 
   return (
-    <BookList
-      variant="feed"
-      type={currentType as TBookListType}
-      subject={currentType === 'subject' ? query : undefined}
-    />
+    <Stack align="center">
+      <BookList
+        variant="feed"
+        type={currentType as TBookListType}
+        subject={currentType === 'subject' ? query : undefined}
+      />
+    </Stack>
   );
 };

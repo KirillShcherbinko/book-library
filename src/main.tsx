@@ -2,7 +2,12 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
-import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/client';
+import {
+  ApolloClient,
+  ApolloLink,
+  HttpLink,
+  InMemoryCache,
+} from '@apollo/client';
 import { ApolloProvider } from '@apollo/client/react';
 import '@mantine/carousel/styles.css';
 import '@mantine/core/styles.css';
@@ -21,7 +26,17 @@ const httpLink = new HttpLink({
 
 const client = new ApolloClient({
   link: ApolloLink.from([errorLink, authLink, httpLink]),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          booksBySubject: {
+            keyArgs: ['subject', 'limit'],
+          },
+        },
+      },
+    },
+  }),
 });
 
 createRoot(document.getElementById('root')!).render(

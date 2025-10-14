@@ -10,7 +10,6 @@ import type {
   QueryUserBooksArgs,
 } from '@/shared';
 
-export type TBookListVariant = 'feed' | 'scroll';
 export type TBookListType = 'subject' | 'search' | 'user';
 
 export type TQueryMap = {
@@ -31,6 +30,7 @@ export type TQueryMap = {
 export type TQueryConfigMap = {
   [K in keyof TQueryMap]: {
     query: DocumentNode;
+    key: keyof Query;
     options: useQuery.Options<TQueryMap[K]['data'], TQueryMap[K]['args']>;
     extract: (data?: TQueryMap[K]['data']) => Book[];
   };
