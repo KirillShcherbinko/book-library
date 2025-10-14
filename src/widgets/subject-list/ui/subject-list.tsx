@@ -1,19 +1,22 @@
 import { useQuery } from '@apollo/client/react';
 import { Carousel } from '@mantine/carousel';
-import { Loader } from '@mantine/core';
+import { Loader, Text } from '@mantine/core';
 
+import { ErrorMessage } from '@/entities/error';
 import { GET_BASIC_SUBJECTS, SubjectCard } from '@/entities/subject';
+
+import { ShowMoreButton } from '@/features/show-more-button';
 
 import type { Subject } from '@/shared';
 
 import Style from './subject-list.module.css';
 
 export const SubjectList = () => {
-  const { data, loading, error } = useQuery<{ subjects: Subject[] }>(GET_BASIC_SUBJECTS);
+  const { data, loading, error, refetch } = useQuery<{ subjects: Subject[] }>(GET_BASIC_SUBJECTS);
 
   if (loading) return <Loader />;
-  if (error) return <>{error.message}</>;
-  if (!data?.subjects) return <>No data</>;
+  if (error) return <ErrorMessage error={error} refetch={refetch} />;
+  if (!data) return <Text c="var(--mantine-color-light-7)">No results</Text>;
 
   return (
     <Carousel
@@ -32,6 +35,10 @@ export const SubjectList = () => {
           <SubjectCard title={title} icon={icon} />
         </Carousel.Slide>
       ))}
+      <Carousel.Slide key="subject more" className={Style.ShowMoreButton}>
+        <ShowMoreButton route="/subjects" size={48} p={12} />
+        <Text>{`Show more subjects`}</Text>
+      </Carousel.Slide>
     </Carousel>
   );
 };

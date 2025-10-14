@@ -12,3 +12,16 @@
     cursor: default;
   }
 }
+
+.ShowMoreButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  max-width: 240px;
+  width: 100%;
+  padding: 64px;
+  padding-bottom: calc(270px / 2);
+}

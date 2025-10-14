@@ -24,7 +24,7 @@ export const SubjectCard = ({ title, icon }: TSubjectCardProps) => {
       <Title component="h5" order={5}>
         {title}
       </Title>
-      {SubjectIcon && <SubjectIcon size={32} bg="--mantine-color-gray-4" radius={1000} />}
+      {SubjectIcon && <SubjectIcon size={32} bg="--mantine-color-gray-4" radius={1000} stroke={1.5}/>}
     </div>
   );
 };

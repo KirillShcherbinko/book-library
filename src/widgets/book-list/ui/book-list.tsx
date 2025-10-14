@@ -8,6 +8,8 @@ import { Group, Loader, Stack, Text } from '@mantine/core';
 import { BookCard, type TBookListVariant, bookStore } from '@/entities/book';
 import { ErrorMessage } from '@/entities/error';
 
+import { ShowMoreButton } from '@/features/show-more-button';
+
 import type { Book } from '@/shared';
 
 import { useBookList, useFetchMoreBooks } from '../api/hooks';
@@ -63,6 +65,10 @@ export const BookList = observer(({ type, variant = 'feed', subject }: TBookList
       }}
     >
       {books.map((book) => renderCard(book))}
+      <Carousel.Slide key={`more-book-${subject}`} className={Style.ShowMoreButton}>
+        <ShowMoreButton route={`/books/${subject}`} size={64} p={16} />
+        <Text>{`Show more ${subject}`}</Text>
+      </Carousel.Slide>
     </Carousel>
   ) : (
     <>

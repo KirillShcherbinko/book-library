@@ -12,3 +12,14 @@
     cursor: default;
   }
 }
+
+.ShowMoreButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  max-width: 180px;
+  width: 100%;
+}
