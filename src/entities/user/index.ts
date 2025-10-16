@@ -1,6 +1,5 @@
-export { useAuthInit } from './api/hooks';
 export { LOGIN, LOGOUT, REGISTER } from './api/queries';
-export { authLink, errorLink } from './api/links';
+export { authLink, errorLink, refreshLink } from './api/links';
 
 export { authStore } from './model/store';
 export { userSchema } from './model/schemas';

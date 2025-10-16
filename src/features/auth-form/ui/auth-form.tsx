@@ -33,7 +33,7 @@ export const AuthForm = observer(() => {
     const { email, password } = formValues;
     const data = await submit({ email, password });
 
-    authStore.set(data?.accessToken || null);
+    authStore.setAccessToken(data?.accessToken || null);
     navigate('/profile');
   };
 

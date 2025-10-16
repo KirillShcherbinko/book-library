@@ -1,1 +1,1 @@
-export const prefixes = ['', '/books/:subject', '/search'];
+export const prefixes = ['', '/books/:subject', '/books/search'];

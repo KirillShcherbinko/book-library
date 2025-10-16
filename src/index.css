@@ -10,7 +10,7 @@ body {
   justify-content: start;
   align-items: start;
   height: 100%;
-  background-color: var(--mantine-color-light-2);
+  background-color: var(--mantine-color-light-0);
 }
 
 #root {

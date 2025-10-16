@@ -6,6 +6,7 @@ import { ErrorLink } from '@apollo/client/link/error';
 import { authStore } from '../model/store';
 import { REFRESH } from './queries';
 
+////////// Извлекаем новый Access token //////////
 const fetchAccessToken = async () => {
   const { VITE_BASE_URL } = import.meta.env;
   const result = await fetch(`${VITE_BASE_URL}/`, {
@@ -29,6 +30,20 @@ const fetchAccessToken = async () => {
   return accessToken;
 };
 
+////////// Дожидаемся завершения извлечения токена и продолжаем поток //////////
+const waitForPromise = (
+  operation: ApolloLink.Operation,
+  forward: ApolloLink.ForwardFunction,
+  refreshPromise: Promise<string | null>,
+) => {
+  return new Observable<ApolloLink.Result>((observer) => {
+    // Неважно получили токен или нет, всё равно продолжим работу
+    refreshPromise.finally(() => forward(operation).subscribe(observer));
+    return () => {};
+  });
+};
+
+////////// Ловим ошибку авторизации //////////
 export const errorLink = new ErrorLink(({ error, operation, forward }) => {
   if (
     CombinedGraphQLErrors.is(error) &&
@@ -37,12 +52,16 @@ export const errorLink = new ErrorLink(({ error, operation, forward }) => {
     return new Observable((observer) => {
       (async () => {
         try {
+          // Получаем новый токен
           const newAccessToken = await fetchAccessToken();
 
-          if (!newAccessToken) throw new Error('Refresh failed');
+          if (!newAccessToken) {
+            throw new Error('Refresh failed');
+          }
 
-          authStore.set(newAccessToken);
+          authStore.setAccessToken(newAccessToken);
 
+          // Закидываем полученные данные в контекст
           operation.setContext(({ headers = {} }) => ({
             headers: {
               ...headers,
@@ -50,9 +69,10 @@ export const errorLink = new ErrorLink(({ error, operation, forward }) => {
             },
           }));
 
+          // Обновили токен и перенаправили через него поток
           forward(operation).subscribe({
             next: (result) => observer.next(result),
-            error: (err) => observer.error(err),
+            error: (error) => observer.error(error),
             complete: () => observer.complete(),
           });
         } catch (error) {
@@ -65,8 +85,9 @@ export const errorLink = new ErrorLink(({ error, operation, forward }) => {
   }
 });
 
+////////// Закидываем access token с заголовками в контекст //////////
 export const authLink = new ApolloLink((operation, forward) => {
-  const accessToken = authStore.get();
+  const accessToken = authStore.getAccessToken();
 
   operation.setContext(({ headers = {} }) => ({
     headers: {
@@ -75,5 +96,38 @@ export const authLink = new ApolloLink((operation, forward) => {
     },
   }));
 
+  return forward(operation);
+});
+
+////////// Устанавливаем access token при первом рендере //////////
+export const refreshLink = new ApolloLink((operation, forward) => {
+  // Получаем данные
+  const refreshPromise = authStore.getRefreshPromise();
+  const isValid = authStore.isValid();
+
+  // Ждём заверешения промиса, если мы не в первый раз запускаем приложение
+  if (refreshPromise !== null) {
+    return waitForPromise(operation, forward, refreshPromise);
+  }
+
+  // Запускаем приложение в первый раз и устанавливаем промис
+  if (!isValid) {
+    const newRefreshPromise: Promise<string | null> = (async () => {
+      try {
+        const newAccessToken = await fetchAccessToken();
+        authStore.setAccessToken(newAccessToken);
+        return newAccessToken;
+      } catch (error) {
+        authStore.clear();
+        return null;
+      }
+    })();
+
+    // Устанавливаем то, что у нас получилось
+    authStore.setRefreshPromise(newRefreshPromise);
+    return waitForPromise(operation, forward, newRefreshPromise);
+  }
+
+  // Всё установлено => идём дальше
   return forward(operation);
 });

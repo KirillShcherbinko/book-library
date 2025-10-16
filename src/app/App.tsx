@@ -1,11 +1,15 @@
-import { useAuthInit } from '@/entities/user';
+import { observer } from 'mobx-react-lite';
 
 import { AppRouter } from './router';
+import { ApolloProvider } from '@apollo/client/react';
+import { client } from './api/apollo-client';
 
-function App() {
-  useAuthInit();
-  
-  return <AppRouter />;
-}
+const App = observer(() => {
+  return (
+    <ApolloProvider client={client}>
+      <AppRouter />
+    </ApolloProvider>
+  );
+});
 
 export default App;

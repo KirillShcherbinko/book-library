@@ -2,13 +2,6 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
-import {
-  ApolloClient,
-  ApolloLink,
-  HttpLink,
-  InMemoryCache,
-} from '@apollo/client';
-import { ApolloProvider } from '@apollo/client/react';
 import '@mantine/carousel/styles.css';
 import '@mantine/core/styles.css';
 import { Notifications } from '@mantine/notifications';
@@ -16,38 +9,15 @@ import '@mantine/notifications/styles.css';
 
 import App from './app/App.tsx';
 import { ThemeProvider } from './entities/theme';
-import { authLink, errorLink } from './entities/user';
 import './index.css';
-
-const httpLink = new HttpLink({
-  uri: import.meta.env.VITE_BASE_URL,
-  credentials: 'include',
-});
-
-const client = new ApolloClient({
-  link: ApolloLink.from([errorLink, authLink, httpLink]),
-  cache: new InMemoryCache({
-    typePolicies: {
-      Query: {
-        fields: {
-          booksBySubject: {
-            keyArgs: ['subject', 'limit'],
-          },
-        },
-      },
-    },
-  }),
-});
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
-      <ApolloProvider client={client}>
-        <BrowserRouter>
-          <Notifications />
-          <App />
-        </BrowserRouter>
-      </ApolloProvider>
+      <BrowserRouter>
+        <Notifications />
+        <App />
+      </BrowserRouter>
     </ThemeProvider>
   </StrictMode>,
 );

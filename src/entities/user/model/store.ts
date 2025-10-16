@@ -2,17 +2,26 @@ import { makeAutoObservable } from 'mobx';
 
 class AuthStore {
   private accessToken: string | null = null;
+  private refreshPromise: Promise<string | null> | null = null; 
 
   public constructor() {
     makeAutoObservable(this);
   }
 
-  public get(): string | null {
+  public getAccessToken(): string | null {
     return this.accessToken;
   }
 
-  public set(accessToken: string | null): void {
+  public getRefreshPromise(): Promise<string | null> | null {
+    return this.refreshPromise;
+  }
+
+  public setAccessToken(accessToken: string | null): void {
     this.accessToken = accessToken;
+  }
+
+  public setRefreshPromise(refreshPromise: Promise<string | null> | null) {
+    this.refreshPromise = refreshPromise;
   }
 
   public clear(): void {
@@ -21,6 +30,10 @@ class AuthStore {
 
   public isValid(): boolean {
     return this.accessToken !== null;
+  }
+
+  public isFirstRefresh(): boolean {
+    return this.refreshPromise === null;
   }
 }
 
