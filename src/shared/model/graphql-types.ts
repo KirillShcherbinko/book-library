@@ -72,10 +72,17 @@ export type MutationRemoveBookArgs = {
   bookKey: Scalars['String']['input'];
 };
 
+export type PopularBook = {
+  __typename?: 'PopularBook';
+  books?: Maybe<Array<Book>>;
+  subject: Scalars['String']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
   book: Book;
   booksBySubject?: Maybe<Array<Book>>;
+  popularBooks: Array<PopularBook>;
   popularBooksSubjects: Array<Scalars['String']['output']>;
   refresh: AuthResponse;
   searchBooks?: Maybe<Array<Book>>;

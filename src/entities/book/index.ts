@@ -3,6 +3,7 @@ export {
   SEARCH_BOOKS,
   GET_USER_BOOKS,
   GET_BOOK,
+  GET_POPULAR_BOOKS,
   ADD_BOOK,
   REMOVE_BOOK,
 } from './api/queries';

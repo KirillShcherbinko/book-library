@@ -47,6 +47,20 @@ export const GET_BOOK = gql`
   }
 `;
 
+export const GET_POPULAR_BOOKS = gql`
+  query GetPopularBooks {
+    popularBooks {
+      subject
+      books {
+        key
+        title
+        authors
+        coverId
+      }
+    }
+  }
+`;
+
 export const ADD_BOOK = gql`
   mutation AddBook($book: BookInput!) {
     addBook(book: $book)

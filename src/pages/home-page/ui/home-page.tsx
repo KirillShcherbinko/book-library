@@ -1,33 +1,38 @@
+import { lazy } from 'react';
+
 import { useQuery } from '@apollo/client/react';
-import { Loader, Stack, Title } from '@mantine/core';
+import { Stack, Text } from '@mantine/core';
 
-import { GET_POPULAR_BOOKS_SUBJECTS } from '@/entities/subject';
+import { GET_POPULAR_BOOKS } from '@/entities/book';
+import { ErrorMessage } from '@/entities/error';
 
-import { BookList } from '@/widgets/book-list';
+import { BookCarouselSkeleton } from '@/widgets/book-carousel';
 import { SubjectList } from '@/widgets/subject-list';
 
-export const HomePage = () => {
-  const {
-    data: { popularBooksSubjects: subjects } = {},
-    loading,
-    error,
-  } = useQuery<{ popularBooksSubjects: string[] }>(GET_POPULAR_BOOKS_SUBJECTS);
+import type { PopularBook } from '@/shared';
 
-  if (loading) return <Loader />;
-  if (error) return <>{error.message}</>;
-  if (!subjects) return <>No data</>;
+const BookCarousel = lazy(() =>
+  import('@/widgets/book-carousel').then((module) => ({ default: module.BookCarousel })),
+);
+export const HomePage = () => {
+  const { data, loading, error, refetch } = useQuery<{ popularBooks: PopularBook[] }>(
+    GET_POPULAR_BOOKS,
+  );
+
+  if (error) return <ErrorMessage error={error} refetch={refetch} />;
+  if (!data?.popularBooks && !loading)
+    return <Text c="var(--mantine-color-light-7)">No results</Text>;
 
   return (
     <Stack gap="lg" maw={1280} w="100%">
       <SubjectList />
-      {subjects.map((subject) => (
-        <Stack key={subject} gap="md">
-          <Title component="h3" order={3}>
-            {subject}
-          </Title>
-          <BookList variant="scroll" type="subject" subject={subject} />
-        </Stack>
-      ))}
+      {loading
+        ? Array.from({ length: 10 }).map((_, index) => <BookCarouselSkeleton key={index} />)
+        : data?.popularBooks.map(({ subject, books }) => (
+            <Stack key={subject} gap="md">
+              <BookCarousel subject={subject} books={books || []} />
+            </Stack>
+          ))}
     </Stack>
   );
 };

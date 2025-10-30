@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useQuery } from '@apollo/client/react';
 import { useDebouncedValue, useIntersection } from '@mantine/hooks';
 
-import { type TBookListVariant, bookStore } from '@/entities/book';
+import { bookStore } from '@/entities/book';
 
 import { TYPE_QUERY_MAP } from '../config/type-query-map';
 import { DEBOUNCE_TIME } from '../model/consts';
@@ -11,12 +11,11 @@ import type { TBookListType, TQueryMap } from '../model/types';
 
 export const useBookList = <K extends TBookListType>(
   type: K,
-  variant: TBookListVariant,
   subject?: string,
 ) => {
   const searchQuery = bookStore.getSearchQuery();
-  const limit = bookStore.getLimit(variant);
-  const offset = bookStore.getOffset(variant);
+  const limit = bookStore.getLimit('feed');
+  const offset = bookStore.getOffset('feed');
 
   const [debouncedQuery] = useDebouncedValue(searchQuery, DEBOUNCE_TIME);
 
@@ -26,7 +25,7 @@ export const useBookList = <K extends TBookListType>(
   const result = useQuery<TQueryMap[K]['data'], TQueryMap[K]['args']>(query, options);
 
   const loadMore = async () => {
-    const currentOffset = bookStore.getOffset(variant);
+    const currentOffset = bookStore.getOffset('feed');
     const nextOffset = currentOffset + limit;
 
     await result.fetchMore({
