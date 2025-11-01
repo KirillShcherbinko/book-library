@@ -7,7 +7,7 @@ export const tabLinks = [
   {
     value: 'search',
     label: 'Search',
-    route: '/books/search',
+    route: '/search',
   },
   {
     value: 'subjects',
@@ -17,6 +17,6 @@ export const tabLinks = [
   {
     value: 'library',
     label: 'Library',
-    route: '/library/:userId',
+    route: '/library',
   },
 ];

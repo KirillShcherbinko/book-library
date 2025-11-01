@@ -2,10 +2,10 @@ import { Stack } from '@mantine/core';
 
 import { BookList } from '@/widgets/book-list';
 
-export const BooksPage = () => {
+export const LibraryPage = () => {
   return (
     <Stack align="center">
-      <BookList type="subject" />
+      <BookList type="user" />
     </Stack>
   );
 };

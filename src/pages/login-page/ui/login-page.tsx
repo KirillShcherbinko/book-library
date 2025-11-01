@@ -1,4 +1,4 @@
-import { Stack, Text, Title } from '@mantine/core';
+import { Anchor, Group, Stack, Text, Title } from '@mantine/core';
 
 import { AuthForm } from '@/features/auth-form';
 
@@ -14,6 +14,11 @@ export const LoginPage = () => {
         </Text>
       </Stack>
       <AuthForm />
+      <Group w="100%" justify="center">
+        <Text ta="center">
+          Don't have an account? <Anchor href="/auth/register">Register here</Anchor>
+        </Text>
+      </Group>
     </Stack>
   );
 };

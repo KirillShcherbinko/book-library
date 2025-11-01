@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+
 import { FEED_BOOKS_LIMIT, SCROLL_BOOKS_LIMIT } from './consts';
 import type { TBookListVariant } from './types';
 
@@ -7,6 +8,7 @@ class BookStore {
   private scrollLimit: number = SCROLL_BOOKS_LIMIT;
   private feedLimit: number = FEED_BOOKS_LIMIT;
   private offset: number = 0;
+  private booksNumber: number = FEED_BOOKS_LIMIT;
 
   public constructor() {
     makeAutoObservable(this);
@@ -17,7 +19,7 @@ class BookStore {
   }
 
   public getLimit(bookListVariant: TBookListVariant) {
-    return bookListVariant === 'scroll' ?  this.scrollLimit : this.feedLimit;
+    return bookListVariant === 'scroll' ? this.scrollLimit : this.feedLimit;
   }
 
   public getOffset(bookListVariant: TBookListVariant) {
@@ -30,6 +32,15 @@ class BookStore {
 
   public setOffset(offset: number) {
     this.offset = offset;
+  }
+
+  public setBooksNumber(booksNumber: number): void {
+    this.booksNumber = booksNumber;
+  }
+
+  public hasMoreBooks(): boolean {
+    console.log(this.booksNumber, this.offset + this.feedLimit);
+    return this.booksNumber === this.offset + this.feedLimit;
   }
 }
 

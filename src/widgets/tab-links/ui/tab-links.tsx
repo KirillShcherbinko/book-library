@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Tabs } from '@mantine/core';
 
 import type { TTabLinksData } from '../model/types';
+import Style from './tab-links.module.css';
 
 type TTabLinksProps = {
   tabLinks: TTabLinksData[];
@@ -26,7 +27,7 @@ export const TabLinks = ({ tabLinks }: TTabLinksProps) => {
   };
 
   return (
-    <Tabs value={currentTab} onChange={handleTabChange}>
+    <Tabs classNames={{ list: Style.TabsList }} value={currentTab} onChange={handleTabChange}>
       <Tabs.List>
         {tabLinks.map((tabLink) => (
           <Tabs.Tab key={tabLink.value} value={tabLink.value} aria-label={tabLink.label}>

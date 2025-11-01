@@ -76,6 +76,7 @@ export const errorLink = new ErrorLink(({ error, operation, forward }) => {
             complete: () => observer.complete(),
           });
         } catch (error) {
+          authStore.setLoading(false);
           observer.error(error);
         }
       })();
@@ -120,6 +121,8 @@ export const refreshLink = new ApolloLink((operation, forward) => {
       } catch (error) {
         authStore.clear();
         return null;
+      } finally {
+        authStore.setLoading(false);
       }
     })();
 

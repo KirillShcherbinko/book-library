@@ -13,17 +13,19 @@ import { BookListSkeleton } from './book-list-skeleton';
 
 type TBookListProps = {
   type: TBookListType;
-  subject?: string;
 };
 
-export const BookList = observer(({ type, subject }: TBookListProps) => {
-  const { data: books, loading, error, fetchMore, refetch } = useBookList(type, subject);
+export const BookList = observer(({ type }: TBookListProps) => {
+  const { data: books, loading, error, fetchMore, refetch } = useBookList(type);
   const ref = useFetchMoreBooks(loading, fetchMore);
 
   const searchQuery = bookStore.getSearchQuery();
 
   useEffect(() => {
-    return () => bookStore.setOffset(0);
+    return () => {
+      bookStore.setOffset(0);
+      bookStore.setBooksNumber(bookStore.getLimit('feed'));
+    };
   }, []);
 
   if (type === 'search' && !searchQuery)
@@ -45,7 +47,7 @@ export const BookList = observer(({ type, subject }: TBookListProps) => {
           />
         ))}
       </Group>
-      {loading && books.length > 0 && (
+      {loading && books.length > 0 && bookStore.hasMoreBooks() && (
         <Stack w="100%" align="center" mt="md">
           <Loader />
         </Stack>

@@ -28,7 +28,7 @@ export const SubjectsPage = () => {
             size="xl"
             fz="h3"
             fw={700}
-            href={`/books/${subject.title}`}
+            href={`books/${subject.title}`}
           >
             {subject.title}
           </Anchor>
@@ -37,7 +37,7 @@ export const SubjectsPage = () => {
               <Badge
                 variant="default"
                 className={Style.Badge}
-                onClick={() => navigate(`/books/${subSubject}`)}
+                onClick={() => navigate(`books/${subSubject}`)}
                 fw={600}
               >
                 {subSubject}

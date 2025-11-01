@@ -34,7 +34,7 @@ export const AuthForm = observer(() => {
     const data = await submit({ email, password });
 
     authStore.setAccessToken(data?.accessToken || null);
-    navigate('/profile');
+    navigate('/library');
   };
 
   return (

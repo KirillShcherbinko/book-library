@@ -16,6 +16,12 @@ export const client = new ApolloClient({
           booksBySubject: {
             keyArgs: ['subject', 'limit'],
           },
+          searchBooks: {
+            keyArgs: ['search', 'limit'],
+          },
+          userBooks: {
+            keyArgs: ['user', 'limit'],
+          },
         },
       },
     },

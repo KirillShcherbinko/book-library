@@ -16,7 +16,7 @@ export const ManiLayout = () => {
       <Header>
         <TabLinks tabLinks={tabLinks} />
       </Header>
-      <AppShell.Main className={Style.MainLayout}>
+      <AppShell.Main mih="100vh - 64px" className={Style.MainLayout}>
         <Outlet />
       </AppShell.Main>
     </AppShell>
