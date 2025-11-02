@@ -7,6 +7,8 @@ import { AppShell, type AppShellHeaderProps, Button, Group, Image } from '@manti
 
 import { authStore } from '@/entities/user';
 
+import { LogoutButton } from '@/features/logout-button';
+
 import { LibraryLogo } from '@/shared';
 
 import Style from './header.module.css';
@@ -36,10 +38,13 @@ export const Header = observer(({ children, props }: THeaderProps) => {
         />
         {children}
       </Group>
-
-      <Button variant="transparent" onClick={onLogin} loading={isLoading}>
-        {isAuthenticated ? 'Logout' : 'Login'}
-      </Button>
+      {isAuthenticated ? (
+        <LogoutButton />
+      ) : (
+        <Button variant="transparent" onClick={onLogin} loading={isLoading}>
+          Login
+        </Button>
+      )}
     </AppShell.Header>
   );
 });

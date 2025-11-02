@@ -30,7 +30,7 @@ export const AddBookToLibraryButton = observer(({ urlKey }: TAddBookToLibraryPro
       });
       return;
     }
-    
+
     if (isAuthenticated) {
       await addBook({ variables: { book } });
     } else {
@@ -39,7 +39,7 @@ export const AddBookToLibraryButton = observer(({ urlKey }: TAddBookToLibraryPro
   };
 
   return (
-    <Button variant="filled" onClick={handleClick} loading={loading} w="100%">
+    <Button variant="filled" onClick={handleClick} loading={loading} radius="md">
       Add to library
     </Button>
   );

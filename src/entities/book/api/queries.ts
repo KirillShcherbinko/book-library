@@ -69,6 +69,6 @@ export const ADD_BOOK = gql`
 
 export const REMOVE_BOOK = gql`
   mutation RemoveBook($bookKey: String!) {
-    removeBokk(bookKey: $bookKey)
+    removeBook(bookKey: $bookKey)
   }
 `;

@@ -36,7 +36,7 @@ export const BookList = observer(({ type }: TBookListProps) => {
 
   return (
     <>
-      <Group align="start" justify="center" maw={968} w="100%">
+      <Group justify="center" align="start" maw={1084}>
         {books.map((book) => (
           <BookCard
             key={book.key}

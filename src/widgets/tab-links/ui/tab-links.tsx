@@ -17,7 +17,7 @@ export const TabLinks = ({ tabLinks }: TTabLinksProps) => {
   const [opened, { toggle, close }] = useDisclosure(false);
 
   const theme = useMantineTheme();
-  const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.md})`);
+  const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
 
   const possibleTabs = tabLinks.filter((tabLink) => {
     return location.pathname.startsWith(tabLink.route);

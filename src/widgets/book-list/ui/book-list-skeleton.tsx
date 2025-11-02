@@ -4,8 +4,8 @@ import { BookCardSkeleton } from '@/entities/book';
 
 export const BookListSkeleton = () => {
   return (
-    <Group align="start">
-      {Array.from({ length: 24 }).map((_, index) => (
+    <Group justify="center" align="start" maw={1084}>
+      {Array.from({ length: 30 }).map((_, index) => (
         <BookCardSkeleton key={index} />
       ))}
     </Group>

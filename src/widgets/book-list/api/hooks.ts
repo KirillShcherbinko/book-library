@@ -1,13 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useQuery } from '@apollo/client/react';
-import { useDebouncedValue, useIntersection } from '@mantine/hooks';
+import { useIntersection } from '@mantine/hooks';
 
 import { bookStore } from '@/entities/book';
 
 import { TYPE_QUERY_MAP } from '../config/type-query-map';
-import { DEBOUNCE_TIME } from '../model/consts';
 import type { TBookListType, TQueryMap } from '../model/types';
 
 export const useBookList = <K extends TBookListType>(type: K) => {
@@ -17,9 +16,7 @@ export const useBookList = <K extends TBookListType>(type: K) => {
   const limit = bookStore.getLimit('feed');
   const offset = bookStore.getOffset('feed');
 
-  const [debouncedQuery] = useDebouncedValue(searchQuery, DEBOUNCE_TIME);
-
-  const { query, key, options, extract } = TYPE_QUERY_MAP(limit, offset, subject, debouncedQuery)[
+  const { query, key, options, extract } = TYPE_QUERY_MAP(limit, offset, subject, searchQuery)[
     type
   ];
   const result = useQuery<TQueryMap[K]['data'], TQueryMap[K]['args']>(query, options);
@@ -65,10 +62,21 @@ export const useFetchMoreBooks = (loading: boolean, fetchMore: () => void) => {
     threshold: 0,
   });
 
+  const triggeredRef = useRef(false);
+
   useEffect(() => {
-    console.log(entry?.isIntersecting, !loading, bookStore.hasMoreBooks());
-    if (entry?.isIntersecting && !loading && bookStore.hasMoreBooks()) {
+    if (
+      entry?.isIntersecting &&
+      !loading &&
+      !triggeredRef.current &&
+      bookStore.hasMoreBooks()
+    ) {
+      triggeredRef.current = true;
       fetchMore();
+    }
+
+    if (!entry?.isIntersecting) {
+      triggeredRef.current = false;
     }
   }, [entry, loading]);
 

@@ -19,20 +19,22 @@ export const HomePage = () => {
     GET_POPULAR_BOOKS,
   );
 
-  if (error) return <ErrorMessage error={error} refetch={refetch} />;
-  if (!data?.popularBooks && !loading)
-    return <Text c="var(--mantine-color-light-7)">No results</Text>;
-
   return (
     <Stack gap="lg" maw={1280} w="100%">
       <SubjectList />
-      {loading
-        ? Array.from({ length: 10 }).map((_, index) => <BookCarouselSkeleton key={index} />)
-        : data?.popularBooks.map(({ subject, books }) => (
-            <Stack key={subject} gap="md">
-              <BookCarousel subject={subject} books={books || []} />
-            </Stack>
-          ))}
+      {loading ? (
+        Array.from({ length: 10 }).map((_, index) => <BookCarouselSkeleton key={index} />)
+      ) : error ? (
+        <ErrorMessage error={error} refetch={refetch} />
+      ) : !data?.popularBooks ? (
+        <Text c="var(--mantine-color-light-7)">No results</Text>
+      ) : (
+        data?.popularBooks.map(({ subject, books }) => (
+          <Stack key={subject} gap="md">
+            <BookCarousel subject={subject} books={books || []} />
+          </Stack>
+        ))
+      )}
     </Stack>
   );
 };

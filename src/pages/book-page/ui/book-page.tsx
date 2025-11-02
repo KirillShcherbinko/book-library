@@ -1,12 +1,13 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useQuery } from '@apollo/client/react';
-import { Badge, Group, Loader, Stack, Text, Title } from '@mantine/core';
+import { Badge, Button, Divider, Group, Loader, Stack, Text, Title } from '@mantine/core';
 
 import { GET_BOOK } from '@/entities/book';
 import { ErrorMessage } from '@/entities/error';
 
 import { AddBookToLibraryButton } from '@/features/add-book-to-library-button';
+import { RemoveBookFromLibraryButton } from '@/features/remove-book-from-library-button';
 
 import { CoverCarousel } from '@/widgets/cover-carousel';
 
@@ -15,6 +16,8 @@ import type { Book } from '@/shared';
 import Style from './book-page.module.css';
 
 export const BookPage = () => {
+  const navigate = useNavigate();
+
   const { key: urlKey } = useParams();
   const normalizedKey = urlKey?.replace(/_/g, '/') || '';
 
@@ -31,7 +34,7 @@ export const BookPage = () => {
   if (error) return <ErrorMessage error={error} refetch={refetch} />;
   if (!data) return <Text c="var(--mantine-color-light-7)">No results</Text>;
 
-  const { title, authors, description, coverIds, subjects } = data.book;
+  const { title, authors, description, coverIds, subjects, isInLibrary } = data.book;
 
   return (
     <div className={Style.Container}>
@@ -49,7 +52,17 @@ export const BookPage = () => {
           ))}
         </Group>
         <Text>{description}</Text>
-        <AddBookToLibraryButton urlKey={normalizedKey} />
+        <Divider />
+        <Group gap={12}>
+          {isInLibrary ? (
+            <RemoveBookFromLibraryButton urlKey={normalizedKey} />
+          ) : (
+            <AddBookToLibraryButton urlKey={normalizedKey} />
+          )}
+          <Button variant="default" onClick={() => navigate(-1)} radius="md">
+            Back
+          </Button>
+        </Group>
       </Stack>
     </div>
   );

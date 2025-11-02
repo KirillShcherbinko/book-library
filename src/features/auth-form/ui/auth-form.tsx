@@ -47,7 +47,7 @@ export const AuthForm = observer(() => {
             error={!!formState.errors.email}
             leftSection={<IconMail size={20} stroke={1.2} />}
             disabled={loading}
-            radius="lg"
+            radius="md"
             {...register('email')}
           />
         </Input.Wrapper>
@@ -58,12 +58,12 @@ export const AuthForm = observer(() => {
           error={formState.errors.password?.message}
           leftSection={<IconLock size={20} stroke={1.2} />}
           disabled={loading}
-          radius="lg"
+          radius="md"
           {...register('password')}
         />
       </Stack>
 
-      <Button type="submit" radius="lg">
+      <Button type="submit" radius="md">
         {location.pathname.includes('login') ? 'Login' : 'Register'}
       </Button>
     </form>

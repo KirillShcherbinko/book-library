@@ -4,7 +4,7 @@ import { BookList } from '@/widgets/book-list';
 
 export const BooksPage = () => {
   return (
-    <Stack align="center">
+    <Stack align="center" p={24}>
       <BookList type="subject" />
     </Stack>
   );
