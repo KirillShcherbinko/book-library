@@ -3,9 +3,11 @@ import { observer } from 'mobx-react-lite';
 import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { AppShell, type AppShellHeaderProps, Button } from '@mantine/core';
+import { AppShell, type AppShellHeaderProps, Button, Group, Image } from '@mantine/core';
 
 import { authStore } from '@/entities/user';
+
+import { LibraryLogo } from '@/shared';
 
 import Style from './header.module.css';
 
@@ -24,7 +26,17 @@ export const Header = observer(({ children, props }: THeaderProps) => {
 
   return (
     <AppShell.Header pos="sticky" withBorder={false} className={Style.Header} {...props}>
-      {children}
+      <Group gap="md">
+        <Image
+          w={128 / 3}
+          h={32}
+          src={LibraryLogo}
+          alt="Library logo"
+          onClick={() => navigate('/')}
+        />
+        {children}
+      </Group>
+
       <Button variant="transparent" onClick={onLogin} loading={isLoading}>
         {isAuthenticated ? 'Logout' : 'Login'}
       </Button>

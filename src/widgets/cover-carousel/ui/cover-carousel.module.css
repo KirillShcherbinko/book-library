@@ -1,0 +1,63 @@
+.Carousel {
+  height: 540px;
+  width: 500px;
+}
+
+.Cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 360px;
+  height: 540px;
+}
+
+.Image {
+  width: 360px;
+  height: 540px;
+}
+
+.Control {
+  background-color: #ffffff;
+  opacity: 1;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.Indicator {
+  background-color: var(--mantine-color-light-5);
+  opacity: 1;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  transition: all 250ms ease;
+
+  &[data-active] {
+    background-color: var(--mantine-color-blue-9);
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .Carousel {
+    width: 100%;
+  }
+
+  .Cover {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .Carousel {
+    height: 360px;
+  }
+
+  .Cover {
+    height: 360px;
+  }
+
+  .Image {
+    width: 192px;
+    height: 270px;
+  }
+}

@@ -3,47 +3,44 @@ import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 
 import { authStore } from '@/entities/user';
 
 import type { BookInput } from '@/shared';
 
-import { useAddBookToLibrary } from '../api/hooks';
+import { useAddBookToLibrary, useBookDetails } from '../api/hooks';
 
 type TAddBookToLibraryProps = {
   urlKey: string;
-  title: string;
-  authors: string[];
-  coverId?: number;
 };
 
-export const AddBookToLibraryButton = observer(
-  ({ urlKey, title, authors, coverId }: TAddBookToLibraryProps) => {
-    const navigate = useNavigate();
+export const AddBookToLibraryButton = observer(({ urlKey }: TAddBookToLibraryProps) => {
+  const navigate = useNavigate();
 
-    const book: BookInput = {
-      key: urlKey,
-      title,
-      authors,
-      coverId,
-    };
+  const book: BookInput | null = useBookDetails(urlKey);
+  const [addBook, { loading, error }] = useAddBookToLibrary(book);
 
-    const [addButton, { loading }] = useAddBookToLibrary(urlKey);
+  const isAuthenticated = authStore.isValid();
+  const handleClick = async () => {
+    if (!book) {
+      notifications.show({
+        id: `add-book-${urlKey}-error-${error}`,
+        message: error?.message,
+      });
+      return;
+    }
+    
+    if (isAuthenticated) {
+      await addBook({ variables: { book } });
+    } else {
+      navigate('/auth/login');
+    }
+  };
 
-    const isAuthenticated = authStore.isValid();
-    const handleClick = async () => {
-      if (isAuthenticated) {
-        console.log(book);
-        await addButton({ variables: { book } });
-      } else {
-        navigate('/auth/login');
-      }
-    };
-
-    return (
-      <Button variant="filled" onClick={handleClick} loading={loading} w="100%">
-        Add to library
-      </Button>
-    );
-  },
-);
+  return (
+    <Button variant="filled" onClick={handleClick} loading={loading} w="100%">
+      Add to library
+    </Button>
+  );
+});
