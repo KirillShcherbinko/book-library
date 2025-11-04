@@ -1,6 +1,7 @@
 .Carousel {
   height: 540px;
   width: 500px;
+  flex-shrink: 0;
 }
 
 .Cover {
@@ -9,6 +10,12 @@
   align-items: center;
   width: 360px;
   height: 540px;
+  border-radius: var(--mantine-radius-md);
+}
+
+.NoCover {
+  background-color: var(--mantine-color-light-4);
+  flex-shrink: 0;
 }
 
 .Image {
@@ -42,8 +49,8 @@
     width: 100%;
   }
 
-  .Cover {
-    width: 100%;
+  .NoCover {
+    align-self: center;
   }
 }
 
@@ -57,6 +64,11 @@
   }
 
   .Image {
+    width: 192px;
+    height: 270px;
+  }
+
+  .NoCover {
     width: 192px;
     height: 270px;
   }

@@ -1,16 +1,22 @@
 import { observer } from 'mobx-react-lite';
 
-import type { ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { type ReactNode, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
-import { AppShell, type AppShellHeaderProps, Button, Group, Image } from '@mantine/core';
+import {
+  AppShell,
+  type AppShellHeaderProps,
+  Burger,
+  Divider,
+  Drawer,
+  Group,
+  Stack,
+  useMantineTheme,
+} from '@mantine/core';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 
-import { authStore } from '@/entities/user';
-
-import { LogoutButton } from '@/features/logout-button';
-
-import { LibraryLogo } from '@/shared';
-
+import { HeaderButtons } from './header-buttons';
+import { HeaderLogo } from './header-logo';
 import Style from './header.module.css';
 
 type THeaderProps = {
@@ -19,31 +25,38 @@ type THeaderProps = {
 };
 
 export const Header = observer(({ children, props }: THeaderProps) => {
-  const navigate = useNavigate();
+  const location = useLocation();
+  const [opened, { toggle, close }] = useDisclosure(false);
 
-  const isAuthenticated = authStore.isValid();
-  const isLoading = authStore.isLoading();
+  const theme = useMantineTheme();
+  const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
 
-  const onLogin = () => navigate('/auth/login');
+  useEffect(() => {
+    close();
+  }, [location.pathname]);
 
   return (
     <AppShell.Header pos="sticky" withBorder={false} className={Style.Header} {...props}>
-      <Group gap="md">
-        <Image
-          w={128 / 3}
-          h={32}
-          src={LibraryLogo}
-          alt="Library logo"
-          onClick={() => navigate('/')}
-        />
-        {children}
-      </Group>
-      {isAuthenticated ? (
-        <LogoutButton />
+      {isMobile ? (
+        <>
+          <HeaderLogo />
+          <Burger opened={opened} onClick={toggle} aria-label="Toggle navigation" />
+          <Drawer opened={opened} onClose={close} title="Navigation">
+            <Stack gap={20}>
+              {children}
+              <Divider />
+              <HeaderButtons />
+            </Stack>
+          </Drawer>
+        </>
       ) : (
-        <Button variant="transparent" onClick={onLogin} loading={isLoading}>
-          Login
-        </Button>
+        <>
+          <Group gap={16}>
+            <HeaderLogo />
+            {children}
+          </Group>
+          <HeaderButtons />
+        </>
       )}
     </AppShell.Header>
   );

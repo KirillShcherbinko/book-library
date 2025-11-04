@@ -1,8 +1,10 @@
 import { Carousel } from '@mantine/carousel';
-import { Image, Stack } from '@mantine/core';
+import { Image } from '@mantine/core';
 import { IconBookOff } from '@tabler/icons-react';
 
 import Style from './cover-carousel.module.css';
+
+import classNames from 'classnames';
 
 const { VITE_COVER_API_BASE_URL } = import.meta.env;
 
@@ -38,8 +40,8 @@ export const CoverCarousel = ({ coverIds }: TCoverCarouselProps) => {
       ))}
     </Carousel>
   ) : (
-    <Stack className={Style.Cover} bg="var(--mantine-color-light-4)" bdrs="md">
+    <div className={classNames(Style.Cover, Style.NoCover)}>
       <IconBookOff size={40} stroke={1.5} />
-    </Stack>
+    </div>
   );
 };

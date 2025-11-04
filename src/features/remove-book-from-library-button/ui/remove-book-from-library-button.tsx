@@ -11,7 +11,7 @@ export const RemoveBookFromLibraryButton = ({ urlKey }: TRemoveBookFromLibraryBu
   const handleClick = async () => await removeBook({ variables: { bookKey: urlKey } });
 
   return (
-    <Button variant="filled" loading={loading} onClick={handleClick}>
+    <Button variant="filled" radius="md" loading={loading} onClick={handleClick}>
       Remove from library
     </Button>
   );

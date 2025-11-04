@@ -1,9 +1,14 @@
 .TabsList {
   --tab-border-color: transparent;
+  width: 100%;
 }
 
 .Tab {
   border: none;
+}
+
+.TabLabel {
+  text-align: start;
 }
 
 .Tab:hover {

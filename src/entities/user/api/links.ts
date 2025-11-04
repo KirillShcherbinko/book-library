@@ -8,6 +8,8 @@ import { REFRESH } from './queries';
 
 ////////// Извлекаем новый Access token //////////
 const fetchAccessToken = async () => {
+  authStore.setLoading(true);
+
   const { VITE_BASE_URL } = import.meta.env;
   const result = await fetch(`${VITE_BASE_URL}/`, {
     method: 'POST',
@@ -76,8 +78,9 @@ export const errorLink = new ErrorLink(({ error, operation, forward }) => {
             complete: () => observer.complete(),
           });
         } catch (error) {
-          authStore.setLoading(false);
           observer.error(error);
+        } finally {
+          authStore.setLoading(false);
         }
       })();
 
@@ -89,6 +92,7 @@ export const errorLink = new ErrorLink(({ error, operation, forward }) => {
 ////////// Закидываем access token с заголовками в контекст //////////
 export const authLink = new ApolloLink((operation, forward) => {
   const accessToken = authStore.getAccessToken();
+  authStore.setLoading(false);
 
   operation.setContext(({ headers = {} }) => ({
     headers: {

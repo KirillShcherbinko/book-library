@@ -20,8 +20,8 @@ export const SubjectListSkeleton = () => {
     >
       <Group align="start">
         {Array.from({ length: 8 }).map((_, index) => (
-          <Carousel.Slide>
-            <SubjectCardSkeleton key={index} />
+          <Carousel.Slide key={index}>
+            <SubjectCardSkeleton />
           </Carousel.Slide>
         ))}
       </Group>

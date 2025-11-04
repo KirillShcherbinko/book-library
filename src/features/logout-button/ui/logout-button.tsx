@@ -12,7 +12,8 @@ export const LogoutButton = observer(() => {
 
   return (
     <Button
-      variant="transparent"
+      variant="filled"
+      radius="md"
       onClick={() => logout()}
       loading={logoutLoading || refreshLoading}
     >

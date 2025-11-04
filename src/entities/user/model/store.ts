@@ -3,7 +3,7 @@ import { makeAutoObservable } from 'mobx';
 class AuthStore {
   private accessToken: string | null = null;
   private refreshPromise: Promise<string | null> | null = null;
-  private loading: boolean = true;
+  private loading: boolean = false;
 
   public constructor() {
     makeAutoObservable(this);
