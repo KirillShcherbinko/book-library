@@ -25,3 +25,19 @@
   padding: 64px;
   padding-bottom: calc(270px / 2);
 }
+
+.BookCarouselSkeleton {
+  width: 100%;
+  overflow: hidden;
+}
+
+.BookCarousel {
+  width: 100%;
+  padding: 0 24px;
+}
+
+@media screen and (max-width: 768px) {
+  .BookCarousel {
+    padding: 0 8px;
+  }
+}

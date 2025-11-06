@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { useQuery } from '@apollo/client/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input, PasswordInput, Stack } from '@mantine/core';
 import { IconLock, IconMail } from '@tabler/icons-react';
@@ -14,6 +15,7 @@ import {
   userSchema,
 } from '@/entities/user';
 import { authStore } from '@/entities/user';
+import { REFRESH } from '@/entities/user/api/queries';
 
 import { useAuth } from '../api/hooks';
 import Style from './auth-form.module.css';
@@ -27,6 +29,7 @@ export const AuthForm = observer(() => {
     defaultValues: { email: '', password: '' },
   });
 
+  useQuery(REFRESH);
   const { submit, loading } = useAuth(setError);
 
   const onSubmit = async (formValues: TUserSchema) => {

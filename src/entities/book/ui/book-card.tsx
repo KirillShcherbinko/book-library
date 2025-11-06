@@ -17,7 +17,7 @@ export const BookCard = ({ bookKey, title, authors, coverId }: TBookCardProps) =
   const navigate = useNavigate();
 
   return (
-    <Stack gap={8} maw={192} w="100%">
+    <Stack gap={8} className={Style.Book}>
       <div className={Style.Cover} onClick={() => navigate(`book/${bookKey.replace(/\//g, '_')}`)}>
         {coverId !== 0 ? (
           <Image

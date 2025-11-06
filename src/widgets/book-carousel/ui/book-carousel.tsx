@@ -15,7 +15,7 @@ type TBookCarouselProps = {
 
 export const BookCarousel = ({ subject, books }: TBookCarouselProps) => {
   return (
-    <Stack gap={12} align="start" w="100%">
+    <Stack gap={12} align="start" className={Style.BookCarousel}>
       <Title component="h3" order={3}>
         {subject}
       </Title>

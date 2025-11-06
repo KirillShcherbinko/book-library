@@ -1,0 +1,9 @@
+.BookPage {
+  padding: 24px;
+}
+
+@media screen and (max-width: 768px) {
+  .BookPage {
+    padding: 16px;
+  }
+}

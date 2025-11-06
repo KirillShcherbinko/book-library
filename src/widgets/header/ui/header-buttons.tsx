@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Group } from '@mantine/core';
+import { Button, Group, Loader } from '@mantine/core';
 
 import { authStore } from '@/entities/user';
 
@@ -17,7 +17,9 @@ export const HeaderButtons = observer(() => {
   const onLogin = () => navigate('/auth/login');
   const onRegister = () => navigate('/auth/register');
 
-  return isAuthenticated ? (
+  return isLoading ? (
+    <Loader size={32} />
+  ) : isAuthenticated ? (
     <LogoutButton />
   ) : (
     <Group gap={12}>

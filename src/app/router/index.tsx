@@ -11,6 +11,8 @@ import { SubjectsPage } from '@/pages/subjects-page';
 
 import { Route, Routes } from 'react-router-dom';
 
+import { ProtectedRoute } from '@/features/protected-route';
+
 export const AppRouter = () => {
   return (
     <Routes>
@@ -18,10 +20,24 @@ export const AppRouter = () => {
         <Route index element={<HomePage />} />
         <Route path="subjects" element={<SubjectsPage />} />
         <Route path="search" element={<SearchPage />} />
-        <Route path="library" element={<LibraryPage />} />
+        <Route
+          path="library"
+          element={
+            <ProtectedRoute isAuthRequired={true}>
+              <LibraryPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="books/:subject" element={<BooksPage />} />
         <Route path="subjects/books/:subject" element={<BooksPage />} />
-        <Route path="auth" element={<AuthLayout />}>
+        <Route
+          path="auth"
+          element={
+            <ProtectedRoute>
+              <AuthLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
         </Route>

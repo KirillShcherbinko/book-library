@@ -20,7 +20,7 @@ export const SubjectList = () => {
   if (!data) return <Text c="var(--mantine-color-light-7)">No results</Text>;
 
   return (
-    <Stack gap={12} align="start" w="100%">
+    <Stack gap={12} align="start" className={Style.SubjectList}>
       <Title component="h3" order={3}>
         Popular subjects
       </Title>

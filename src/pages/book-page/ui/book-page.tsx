@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useQuery } from '@apollo/client/react';
-import { Badge, Button, Divider, Group, Loader, Stack, Text, Title } from '@mantine/core';
+import { Badge, Button, Divider, Group, Stack, Text, Title } from '@mantine/core';
 
 import { GET_BOOK } from '@/entities/book';
 import { ErrorMessage } from '@/entities/error';
@@ -11,7 +11,7 @@ import { RemoveBookFromLibraryButton } from '@/features/remove-book-from-library
 
 import { CoverCarousel } from '@/widgets/cover-carousel';
 
-import type { Book } from '@/shared';
+import { type Book, LoaderLayout } from '@/shared';
 
 import Style from './book-page.module.css';
 
@@ -25,12 +25,7 @@ export const BookPage = () => {
     variables: { key: normalizedKey },
   });
 
-  if (loading)
-    return (
-      <div className={Style.LoaderLayout}>
-        <Loader />
-      </div>
-    );
+  if (loading) return <LoaderLayout />;
   if (error) return <ErrorMessage error={error} refetch={refetch} />;
   if (!data) return <Text c="var(--mantine-color-light-7)">No results</Text>;
 

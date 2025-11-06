@@ -20,7 +20,7 @@ export const HomePage = () => {
   );
 
   return (
-    <Stack gap="lg" maw={1280} w="100%">
+    <Stack gap="lg" maw={1280} w="100%" p="20px 0">
       <SubjectList />
       {loading ? (
         Array.from({ length: 10 }).map((_, index) => <BookCarouselSkeleton key={index} />)
